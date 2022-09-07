@@ -1,5 +1,8 @@
 package com.my.shiro.web;
 
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.subject.Subject;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -22,6 +25,14 @@ public class OrderAddServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-       req.getRequestDispatcher("/order-add.jsp").forward(req,resp);
+        Subject subject = SecurityUtils.getSubject();
+        boolean permitted = subject.isPermitted("order:add");
+        if(permitted){
+            req.getRequestDispatcher("/order-add.jsp").forward(req,resp);
+        }else{
+            resp.sendRedirect("/login.jsp");
+        }
+
+
     }
 }

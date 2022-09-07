@@ -1,5 +1,8 @@
 package com.my.shiro.web;
 
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.subject.Subject;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -22,6 +25,13 @@ public class HomeServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        req.getRequestDispatcher("/home.jsp").forward(req,resp);
+        Subject subject = SecurityUtils.getSubject();
+        boolean authenticated = subject.isAuthenticated();
+        if(authenticated){
+            req.getRequestDispatcher("/home.jsp").forward(req,resp);
+        }else{
+            resp.sendRedirect("/login.jsp");
+        }
+
     }
 }
