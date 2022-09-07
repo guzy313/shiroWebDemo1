@@ -36,7 +36,9 @@
     <listener-class>org.apache.shiro.web.env.EnvironmentLoaderListener</listener-class>
   </listener>
 
-
+  <welcome-file-list>
+    <welcome-file>login.jsp</welcome-file>
+  </welcome-file-list>
 
   
 </web-app>

@@ -2,6 +2,7 @@ package com.my.shiro.web;
 
 import com.my.shiro.service.impl.LoginServiceImpl;
 import org.apache.shiro.authc.UsernamePasswordToken;
+import org.springframework.util.StringUtils;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -30,7 +31,7 @@ public class LoginServlet extends HttpServlet {
         //构建登录token对象
         UsernamePasswordToken token = new UsernamePasswordToken();
         token.setUsername(userName);
-        token.setPassword(password.toCharArray());
+        token.setPassword(StringUtils.hasLength(password)?password.toCharArray():null);//优化密码为空时候toCharArray空指针
 
         //使用token登录
         LoginServiceImpl loginService = new LoginServiceImpl();
